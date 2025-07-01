@@ -4,6 +4,8 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
 } from "./ui/navigation-menu";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./ui/mode-toggle";
@@ -16,11 +18,42 @@ export default function Navigation() {
     return location.pathname === path;
   };
 
-  const navItems = [
+  const mainNavItems = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
     { path: "/services", label: "Services" },
-    { path: "/contact", label: "Contact" },
+  ];
+
+  const companyItems = [
+    {
+      path: "/case-studies",
+      label: "Case Studies",
+      description: "Real client success stories",
+    },
+    {
+      path: "/team",
+      label: "Our Team",
+      description: "Meet our expert consultants",
+    },
+    {
+      path: "/methodology",
+      label: "Our Process",
+      description: "How we deliver results",
+    },
+    {
+      path: "/testimonials",
+      label: "Testimonials",
+      description: "What clients say about us",
+    },
+  ];
+
+  const resourceItems = [
+    {
+      path: "/industries",
+      label: "Industries",
+      description: "Sectors we serve",
+    },
+    { path: "/faq", label: "FAQ", description: "Common questions answered" },
   ];
 
   return (
@@ -38,7 +71,8 @@ export default function Navigation() {
           <div className="flex items-center space-x-8">
             <NavigationMenu>
               <NavigationMenuList>
-                {navItems.map((item) => (
+                {/* Main navigation items */}
+                {mainNavItems.map((item) => (
                   <NavigationMenuItem key={item.path}>
                     <NavigationMenuLink
                       asChild
@@ -52,6 +86,94 @@ export default function Navigation() {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
+
+                {/* Company dropdown */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={cn(
+                      "text-muted-foreground hover:text-primary transition-colors font-medium",
+                      companyItems.some((item) => isActive(item.path)) &&
+                        "text-primary bg-accent"
+                    )}
+                  >
+                    Company
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid w-[500px] gap-3 p-4">
+                      {companyItems.map((item) => (
+                        <NavigationMenuLink
+                          key={item.path}
+                          asChild
+                          className={cn(
+                            "block space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                            isActive(item.path) &&
+                              "bg-accent text-accent-foreground"
+                          )}
+                        >
+                          <Link to={item.path}>
+                            <div className="text-sm font-medium leading-none">
+                              {item.label}
+                            </div>
+                            <p className="text-sm leading-snug text-muted-foreground mt-1">
+                              {item.description}
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                {/* Resources dropdown */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={cn(
+                      "text-muted-foreground hover:text-primary transition-colors font-medium",
+                      resourceItems.some((item) => isActive(item.path)) &&
+                        "text-primary bg-accent"
+                    )}
+                  >
+                    Resources
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid w-[400px] gap-3 p-4">
+                      {resourceItems.map((item) => (
+                        <NavigationMenuLink
+                          key={item.path}
+                          asChild
+                          className={cn(
+                            "block space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                            isActive(item.path) &&
+                              "bg-accent text-accent-foreground"
+                          )}
+                        >
+                          <Link to={item.path}>
+                            <div className="text-sm font-medium leading-none">
+                              {item.label}
+                            </div>
+                            <p className="text-sm leading-snug text-muted-foreground mt-1">
+                              {item.description}
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                {/* Contact */}
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    active={isActive("/contact")}
+                    className={cn(
+                      "text-muted-foreground hover:text-primary transition-colors font-medium px-4 py-2 rounded-md",
+                      isActive("/contact") && "text-primary bg-accent"
+                    )}
+                  >
+                    <Link to="/contact">Contact</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
             <ModeToggle />
