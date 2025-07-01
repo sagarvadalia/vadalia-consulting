@@ -1,0 +1,31 @@
+[core]
+    autocrlf = input
+    fileMode = false
+    ignorecase = false
+
+[init]
+    defaultBranch = main
+
+[commit]
+    gpgsign = true
+    template = .gitmessage
+
+[merge]
+    ff = only
+    commit = no
+
+[rebase]
+    autosquash = true
+    autostash = true
+
+[alias]
+    # Useful aliases
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    # Clean up merged branches
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d"
+    # Interactive rebase with the given number of latest commits
+    rebase-i = "!r() { git rebase -i HEAD~$1; }; r" 
