@@ -1,42 +1,44 @@
-import path from "path";
-import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [tailwindcss(), react()],
+
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@/components": path.resolve(__dirname, "./src/components"),
-      "@/lib": path.resolve(__dirname, "./src/lib"),
-      "@/hooks": path.resolve(__dirname, "./src/hooks"),
-      "@/pages": path.resolve(__dirname, "./src/pages"),
-      "@/assets": path.resolve(__dirname, "./src/assets"),
+      "@": resolve(__dirname, "./src"),
     },
-    extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
   },
-  esbuild: {
-    target: "es2020",
-  },
+
   build: {
-    outDir: "dist",
-    sourcemap: false,
-    minify: "esbuild",
+    sourcemap: true,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ["react", "react-dom"],
-          router: ["react-router-dom"],
+          vendor: ["react", "react-dom", "react-router-dom"],
           ui: [
-            "@radix-ui/react-slot",
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-dropdown-menu",
+            "@radix-ui/react-label",
+            "@radix-ui/react-select",
             "class-variance-authority",
-            "clsx",
             "tailwind-merge",
           ],
         },
       },
     },
+  },
+
+  // Enable route-based code splitting
+  optimizeDeps: {
+    include: ["react", "react-dom", "react-router-dom"],
   },
 });
