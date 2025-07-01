@@ -65,7 +65,18 @@ export default function Navigation() {
             asChild
             className="text-xl font-bold p-0 hover:bg-transparent"
           >
-            <Link to="/">Vadalia Consulting</Link>
+            <Link to="/" className="flex items-center gap-3">
+              <img
+                src="/logo.svg"
+                alt="Vadalia Consulting Logo"
+                className="h-8 w-8"
+                onError={(e) => {
+                  // Fallback if logo doesn't exist yet
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+              <span>Vadalia Consulting</span>
+            </Link>
           </Button>
 
           <div className="flex items-center space-x-8">
