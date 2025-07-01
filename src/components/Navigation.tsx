@@ -9,7 +9,7 @@ import {
 } from "./ui/navigation-menu";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./ui/mode-toggle";
-import { cn } from "./utils";
+import { cn } from "../lib/utils";
 
 export default function Navigation() {
   const location = useLocation();
