@@ -11,6 +11,9 @@
   
   # Enable pnpm
   NPM_FLAGS = "--version"
+  
+  # Force cache clear
+  NETLIFY_CACHE_ID = "v2"
 
 # Handle client-side routing for React Router
 [[redirects]]
