@@ -15,6 +15,10 @@ export default defineConfig({
       "@/pages": path.resolve(__dirname, "./src/pages"),
       "@/assets": path.resolve(__dirname, "./src/assets"),
     },
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+  },
+  esbuild: {
+    target: "es2020",
   },
   build: {
     outDir: "dist",
